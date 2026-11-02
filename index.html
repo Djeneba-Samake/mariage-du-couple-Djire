@@ -190,6 +190,42 @@ footer .script{font-size:48px;display:block;margin-top:10px}
     // Optionnel : Afficher un petit message de confirmation sur le site
     document.getElementById('ok').innerText = "Merci ! Redirection vers WhatsApp...";
   });
+
+<script>
+  const form = document.getElementById('f');
+  const result = document.getElementById('ok');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = {
+      n: formData.get('n'),
+      p: formData.get('p'),
+      k: formData.get('k'),
+      m: formData.get('m'),
+      bot_check: ""
+    };
+
+    result.innerText = "Envoi en cours...";
+    const urlScript = "https://script.google.com/macros/s/AKfycbxUlTja5Wx0KQLQn5_XA3ZXgi5v6IDGRm2Z71yFhk7m6xhVMKbXob2NL1ZSQmbrBAYVKg/exec"; // Remplace par ton lien /exec
+
+    fetch(urlScript, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(() => {
+      result.innerText = "Merci ! Votre réponse a bien été enregistrée.";
+      form.reset();
+    })
+    .catch(error => {
+      console.error('Erreur:', error);
+      result.innerText = "Oups, une erreur est survenue.";
+    });
+  });
+</script>
+  
 </script>
   
 <script>
